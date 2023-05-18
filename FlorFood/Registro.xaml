@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             x:Class="FlorFood.Registro"
+             xmlns:local="clr-namespace:FlorFood">
+    <ContentPage.BindingContext>
+        <local:DatosTipo/>
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <StackLayout>
+            <Label Text="Registro de Usuarios" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20" CharacterSpacing="2" Margin="0,10,0,0" TextColor="Black"/>
+            <Label Text="Eliga el tipo de usuario" HorizontalOptions="Center" TextColor="Black"/>
+            <Label Text="ID" x:Name="lblID" HorizontalOptions="Center" TextColor="Black"/>
+            <editors:SfComboBox x:Name="cbTipo"
+                                WidthRequest="250"
+                                MaxDropDownHeight="250"
+                                ItemsSource="{Binding Tipos}"
+                                TextMemberPath="Name"
+                                DisplayMemberPath="Name"
+                                SelectionChanged="cbTipo_SelectionChanged"
+                                >
+            </editors:SfComboBox>
+            <inputLayout:SfTextInputLayout Hint="Name" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" Stroke="#e33d8b" ContainerBackground="White">
+                <Entry x:Name="tbNombre" Completed="tbNombre_Completed"/>
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout x:Name="Apellido" Hint="Last Name" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" Stroke="#e33d8b" ContainerBackground="White" IsVisible="False">
+                <Entry x:Name="tbApellido"/>
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout Hint="Phone" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" Stroke="#e33d8b" ContainerBackground="White">
+                <Entry Keyboard="Telephone" x:Name="tbTelefono"/>
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout Hint="User" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" Stroke="#e33d8b" ContainerBackground="White">
+                <Entry x:Name="tbUser"/>
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout Hint="Password" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" EnablePasswordVisibilityToggle="true" Stroke="#e33d8b" ContainerBackground="White">
+                <Entry x:Name="tbPassword"/>
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout Hint="Confirm Password" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" EnablePasswordVisibilityToggle="true" Stroke="#e33d8b" ContainerBackground="White">
+                <Entry x:Name="tbConfirmPassword"/>
+            </inputLayout:SfTextInputLayout>
+            <Label x:Name="lblNota" Text="Por favor selecciona la ubicacion de tu local" VerticalOptions="Center" HorizontalOptions="Center" FontSize="12" CharacterSpacing="2" Margin="20,0,0,15" TextColor="Black" IsVisible="False"/>
+            <Label x:Name="lblLatitud" IsVisible="False" HorizontalOptions="Center" FontSize="10"/>
+            <Label x:Name="lblLongitud" IsVisible="False" HorizontalOptions="Center" FontSize="10"/>
+            <maps:Map x:Name="map" IsShowingUser="True" MapType="Street" HeightRequest="500" IsVisible="False" Margin="0,0,0,10" MapClicked="map_MapClicked" IsZoomEnabled="true">
+                <x:Arguments>
+                    <MapSpan>
+                        <x:Arguments>
+                            <sensors:Location>
+                                <x:Arguments>
+                                    <x:Double>25.5730820</x:Double>
+                                    <x:Double>-108.4712446</x:Double>
+                                </x:Arguments>
+                            </sensors:Location>
+                            <x:Double>0.01</x:Double>
+                            <x:Double>0.01</x:Double>
+                        </x:Arguments>
+                    </MapSpan>
+                </x:Arguments>
+            </maps:Map>
+            <Button x:Name="btnGuardar" 
+                    Text="Guardar" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="30"
+                    WidthRequest="180"
+                    HeightRequest="60"
+                    Margin="0,0,0,10"
+                    Clicked="btnGuardar_Clicked"/>
+            <Button x:Name="btnEliminar" 
+                    Text="Eliminar" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="30"
+                    WidthRequest="180"
+                    HeightRequest="60"
+                    Margin="0,0,0,10"
+                    Clicked="btnEliminar_Clicked"/>
+            <Button x:Name="btnExit" 
+                    Text="Salir" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="30"
+                    WidthRequest="180"
+                    HeightRequest="60"
+                    Margin="0,0,0,10"
+                    Clicked="btnExit_Clicked"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

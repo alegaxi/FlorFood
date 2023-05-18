@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             x:Class="FlorFood.Cliente"
+             Appearing="ContentPage_Appearing">
+    <ScrollView VerticalOptions="FillAndExpand">
+        <StackLayout x:Name="mainStackLayout">
+            <Label Text="Selecciona la empresa" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15" CharacterSpacing="2" Margin="0,10,0,0" TextColor="Black" FontFamily="Titulo"/>
+            <editors:SfComboBox x:Name="cbEmpresa"
+                                WidthRequest="250"
+                                MaxDropDownHeight="250"
+                                TextMemberPath="Name"
+                                DisplayMemberPath="Name"
+                                SelectionChanged="cbEmpresa_SelectionChanged"
+                                Stroke="#e33d8b"
+                                >
+            </editors:SfComboBox>
+            <StackLayout x:Name="pedidos" VerticalOptions="FillAndExpand">
+                
+            </StackLayout>
+            <Button x:Name="btnSalir" 
+                    Text="Salir" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="30"
+                    WidthRequest="180"
+                    HeightRequest="60"
+                    Margin="0,0,0,10"
+                    Clicked="btnSalir_Clicked"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

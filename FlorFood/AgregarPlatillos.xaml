@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             x:Class="FlorFood.AgregarPlatillos"
+             IconImageSource="iconoplatillo.png"
+             NavigationPage.HasNavigationBar="False"
+             Appearing="ContentPage_Appearing">
+    <ScrollView>
+        <StackLayout>
+            <Label Text="Platillos" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20" CharacterSpacing="2" Margin="0,10,0,0" TextColor="Black" FontFamily="Titulo"/>
+            <Label Text="ID" x:Name="lblID" HorizontalOptions="Center" TextColor="Black"/>
+            <Label Text="Selecciona la empresa" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15" CharacterSpacing="2" Margin="0,10,0,0" TextColor="Black" FontFamily="Titulo"/>
+            <editors:SfComboBox x:Name="cbEmpresa"
+                                WidthRequest="250"
+                                MaxDropDownHeight="250"
+                                TextMemberPath="Name"
+                                DisplayMemberPath="Name"
+                                SelectionChanged="cbEmpresa_SelectionChanged"
+                                Stroke="#e33d8b"
+                                >
+            </editors:SfComboBox>
+            <inputLayout:SfTextInputLayout Hint="Name" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" Stroke="#e33d8b" ContainerBackground="White">
+                <Entry x:Name="tbNombre" Completed="tbNombre_Completed"/>
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout Hint="Price" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" Stroke="#e33d8b" ContainerBackground="White">
+                <Entry x:Name="tbPrecio" Keyboard="Numeric"/>
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout Hint="Description" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" Stroke="#e33d8b" ContainerBackground="White">
+                <Entry x:Name="tbDescripcion"/>
+            </inputLayout:SfTextInputLayout>
+            <HorizontalStackLayout>
+                <Label Text="  " HorizontalOptions="Center" TextColor="Black"/>
+                <inputLayout:SfTextInputLayout Hint="Image" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" Stroke="#e33d8b" ContainerBackground="White">
+                    <Entry x:Name="tbImageSource"/>
+                </inputLayout:SfTextInputLayout>
+                <Label Text="  " HorizontalOptions="Center" TextColor="Black"/>
+                <Button x:Name="btnImagen" 
+                    Text="+" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="20"
+                    WidthRequest="100"
+                    HeightRequest="50"
+                    Margin="0,0,0,10"
+                    Clicked="btnImagen_Clicked"/>
+            </HorizontalStackLayout>
+            <Image x:Name="ImagenGuardada"/>
+            <Button x:Name="btnGuardar" 
+                    Text="Guardar" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="30"
+                    WidthRequest="180"
+                    HeightRequest="60"
+                    Margin="0,0,0,10"
+                    Clicked="btnGuardar_Clicked"/>
+            <Button x:Name="btnEliminar" 
+                    Text="Eliminar" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="30"
+                    WidthRequest="180"
+                    HeightRequest="60"
+                    Margin="0,0,0,10"/>
+            <Button x:Name="btnSalir" 
+                    Text="Salir" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="30"
+                    WidthRequest="180"
+                    HeightRequest="60"
+                    Margin="0,0,0,10"
+                    Clicked="btnSalir_Clicked"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

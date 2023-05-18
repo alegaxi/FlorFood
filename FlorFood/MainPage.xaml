@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:Class="FlorFood.MainPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="icono.png" Grid.Row="0" Grid.Column="0" WidthRequest="250"/>
+                <Label Text="Food Runners" HorizontalOptions="Center" Grid.Row="1" Grid.Column="0" FontFamily="Rubik" FontSize="25"/>
+                <inputLayout:SfTextInputLayout Hint="User" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" Grid.Row="2" Grid.Column="0" Stroke="#e33d8b" ContainerBackground="White">
+                    <Entry x:Name="tbUser" />
+                </inputLayout:SfTextInputLayout>
+                <inputLayout:SfTextInputLayout Hint="Password" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" EnablePasswordVisibilityToggle="true" Grid.Row="3" Grid.Column="0" Stroke="#e33d8b" ContainerBackground="White">
+                    <Entry x:Name="tbPassword" />
+                </inputLayout:SfTextInputLayout>
+                <Button x:Name="btnAcept" 
+                    Text="Ingresar" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="30"
+                    WidthRequest="180"
+                    HeightRequest="60"
+                    Margin="0,0,0,10"
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Clicked="btnAcept_Clicked"/>
+                <Button x:Name="btnRegistrar" 
+                    Text="Registrar" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="30"
+                    WidthRequest="180"
+                    HeightRequest="60"
+                    Margin="0,0,0,10"
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Clicked="btnRegistrar_Clicked"/>
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
