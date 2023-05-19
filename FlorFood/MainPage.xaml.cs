@@ -25,12 +25,16 @@ public partial class MainPage : ContentPage
             if(op.ValInicioSesionCliente(datoscliente))
             {
                 var cliente = new Cliente();
+                Cliente.userCliente = tbUser.Text;
+                Cliente.passwordCliente = tbPassword.Text;
                 Navigation.PushAsync(cliente);
             }
             else
             {
                 if(op.ValInicioSesionEmpresa(datosempresa))
                 {
+                    AgregarPlatillos.userEmpresa = tbUser.Text;
+                    AgregarPlatillos.passEmpresa = tbPassword.Text;
                     var negocio = new Negocio();
                     Navigation.PushAsync(negocio);
                 }

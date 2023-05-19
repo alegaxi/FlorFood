@@ -7,12 +7,19 @@ namespace FlorFood;
 
 public partial class AgregarPlatillos : ContentPage
 {
+    public static String userEmpresa;
+    public static String passEmpresa;
     int IDNegocio2 = 0;
 	public AgregarPlatillos()
 	{
         OpBaseDeDatos op = new OpBaseDeDatos();
+        DatosEmpresa empresa = new DatosEmpresa();
 		InitializeComponent();
         lblID.Text = op.FolioPlatillo().ToString();
+        if(op.ConsultarEmpresaNombre(userEmpresa, passEmpresa, empresa))
+        {
+            lblNombreEmpresa.Text = empresa.Nombre;
+        }
 	}
 
     private void btnSalir_Clicked(object sender, EventArgs e)
@@ -38,19 +45,6 @@ public partial class AgregarPlatillos : ContentPage
             byte[] datosImagen= File.ReadAllBytes(file.FullPath);
         }
     }
-    private void llenarComboEmpresa()
-    {
-        OpBaseDeDatos op = new OpBaseDeDatos();
-        string query = $"SELECT Nombre FROM Empresa";
-        MySqlCommand COMAND = new MySqlCommand(query, op.CrearConexion());
-        MySqlDataReader reader = COMAND.ExecuteReader();
-        List<string> empresa = new List<string>();
-        while (reader.Read())
-        {
-            empresa.Add(reader.GetString(0));
-        }
-        cbEmpresa.ItemsSource = empresa.ToArray();
-    }
     private async void btnGuardar_Clicked(object sender, EventArgs e)
     {
         OpBaseDeDatos op = new OpBaseDeDatos();
@@ -62,6 +56,10 @@ public partial class AgregarPlatillos : ContentPage
             arreglo = new byte[fs.Length];
             await fs.ReadAsync(arreglo, 0, (int)fs.Length);
         }
+
+        DatosPlatillos dato = new DatosPlatillos();
+        op.ConsultarEmpresa(lblNombreEmpresa.Text, dato);
+        IDNegocio2 = dato.IDNegocio;
 
         DatosPlatillos datos = new DatosPlatillos()
         {
@@ -81,19 +79,6 @@ public partial class AgregarPlatillos : ContentPage
         {
             await DisplayAlert("ERROR", op.sLastError, "Aceptar");
         }
-    }
-
-    private void ContentPage_Appearing(object sender, EventArgs e)
-    {
-        llenarComboEmpresa();
-    }
-
-    private void cbEmpresa_SelectionChanged(object sender, Syncfusion.Maui.Inputs.SelectionChangedEventArgs e)
-    {
-        OpBaseDeDatos op = new OpBaseDeDatos();
-        DatosPlatillos dato = new DatosPlatillos();
-        op.ConsultarEmpresa(Convert.ToString(cbEmpresa.SelectedItem), dato);
-        IDNegocio2 = dato.IDNegocio;
     }
 
     private void tbNombre_Completed(object sender, EventArgs e)

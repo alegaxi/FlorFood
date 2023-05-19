@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -372,7 +373,7 @@ namespace FlorFood
             try
             {
                 string query = "UPDATE Platillo " +
-                                 $"SET IDNegocio = {datos.Nombre}, " +
+                                 $"SET IDNegocio = {datos.IDNegocio}, " +
                                      $"Nombre = '{datos.Nombre}', " +
                                      $"Precio = {datos.Precio}, " +
                                      $"Descripcion = '{datos.Descripcion}', " +
@@ -426,6 +427,84 @@ namespace FlorFood
                 bAllOk = false;
             }
             return bAllOk;
+        }
+        public bool ConsultarEmpresaNombre(String User, String Password, DatosEmpresa empresa)
+        {
+            try
+            {
+                string query = $"SELECT Nombre FROM Empresa WHERE Usuario = '{User}' and Contrasena = '{Password}'";
+                MySqlCommand command = new MySqlCommand(query, CrearConexion());
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    empresa.Nombre = reader["Nombre"].ToString();
+                }
+                bAllOk = true;
+            }
+            catch (Exception ex)
+            {
+                sLastError = ex.Message;
+                bAllOk = false;
+            }
+            return bAllOk;
+        }
+        public bool ConsultarClienteNombre(String User, String Password, DatosCliente cliente)
+        {
+            try
+            {
+                string query = $"SELECT Nombre FROM Clientes WHERE Usuario = '{User}' and Contrasena = '{Password}'";
+                MySqlCommand command = new MySqlCommand(query, CrearConexion());
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    cliente.Nombre = reader["Nombre"].ToString();
+                }
+                bAllOk = true;
+            }
+            catch (Exception ex)
+            {
+                sLastError = ex.Message;
+                bAllOk = false;
+            }
+            return bAllOk;
+        }
+        public List<DatosPlatillos> ObtenerPlatillos(Int32 Id)
+        {
+            List<DatosPlatillos> platillos = new List<DatosPlatillos>();
+
+            try
+            {
+                string query = $"SELECT Nombre, Precio, Descripcion, Imagen FROM Platillo WHERE IDNegocio = {Id}";
+                using (MySqlCommand cmd = new MySqlCommand(query, CrearConexion()))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            DatosPlatillos platillo = new DatosPlatillos();
+
+                            platillo.Nombre = reader.GetString("Nombre");
+                            platillo.Precio = reader.GetDouble("Precio");
+                            platillo.Descripcion = reader.GetString("Descripcion");
+                            byte[] imageData = (byte[])reader.GetValue("Imagen");
+                            platillo.Imagen = imageData;
+
+                            platillos.Add(platillo);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                sLastError = ex.Message;
+                bAllOk = false;
+            }
+
+            return platillos;
         }
     }
 }

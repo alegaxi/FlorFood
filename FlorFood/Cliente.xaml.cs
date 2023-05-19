@@ -5,85 +5,117 @@ using MySqlConnector;
 
 public partial class Cliente : ContentPage
 {
+    public static String userCliente;
+    public static String passwordCliente;
     int IDNegocio2 = 0;
     public Cliente()
 	{
 		InitializeComponent();
-        AddContent();
+        OpBaseDeDatos op = new OpBaseDeDatos();
+        DatosCliente datos = new DatosCliente();
+        if(op.ConsultarClienteNombre(userCliente, passwordCliente, datos))
+        {
+            NombreCliente.Text = datos.Nombre;
+        }
     }
-    private void AddContent()
+
+    private void MostrarPlatillos()
     {
-        pedidos.Children.Clear();
+        OpBaseDeDatos op = new OpBaseDeDatos();
+        List<DatosPlatillos> platillos = op.ObtenerPlatillos(IDNegocio2);
+
+        foreach (var platillo in platillos)
+        {
+            Frame frame = CreateCustomFrame(platillo);
+            pedidos.Children.Add(frame);
+        }
+    }
+    public Frame CreateCustomFrame(DatosPlatillos platillo)
+    {
         Frame frame = new Frame
         {
             BorderColor = Color.FromHex("#e33d8b"),
-            Padding = 10
+            Padding = new Thickness(10)
         };
+
+        StackLayout stackLayout = new StackLayout
+        {
+            Orientation = StackOrientation.Vertical,
+            HorizontalOptions = LayoutOptions.Center
+        };
+
+        // Crear los elementos visuales utilizando los datos del platillo
         Image image = new Image
         {
-            Source = "hamburguesa.jpg",
+            Source = ImageSource.FromStream(() => new MemoryStream(platillo.Imagen)),
             Aspect = Aspect.AspectFill,
             HeightRequest = 150,
             WidthRequest = 150
         };
-        pedidos.Children.Add(image);
 
-        Label label1 = new Label
+        Label nombrePlatillo = new Label
         {
-            Text = "Hamburguesa",
+            Text = platillo.Nombre,
             FontSize = 20,
             FontAttributes = FontAttributes.Bold,
             HorizontalOptions = LayoutOptions.Center
         };
-        pedidos.Children.Add(label1);
 
-        Label label2 = new Label
+        Label descripcion = new Label
         {
-            Text = "Descripción del platillo 1",
+            Text = platillo.Descripcion,
             FontSize = 16,
-            HorizontalOptions = LayoutOptions.Center
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
         };
-        pedidos.Children.Add(label2);
 
         StackLayout horizontalStackLayout = new StackLayout
         {
-            Orientation = StackOrientation.Horizontal
+            Orientation = StackOrientation.Horizontal,
+            HorizontalOptions = LayoutOptions.Center
         };
+
         Label label3 = new Label
         {
             Text = "Precio: ",
             FontSize = 16,
             HorizontalOptions = LayoutOptions.Center
         };
-        horizontalStackLayout.Children.Add(label3);
 
-        Label label4 = new Label
+        Label precio = new Label
         {
-            Text = "150",
+            Text = platillo.Precio.ToString(),
             FontSize = 16,
             HorizontalOptions = LayoutOptions.Center
         };
-        horizontalStackLayout.Children.Add(label4);
 
-        pedidos.Children.Add(horizontalStackLayout);
-
-        Button button = new Button
+        Button btnAgg = new Button
         {
             Text = "Agregar",
             BackgroundColor = Color.FromHex("#e33d8b"),
             HorizontalOptions = LayoutOptions.CenterAndExpand,
-            TextColor = Color.FromHex("#ffffff"),
+            TextColor = Colors.White,
             CornerRadius = 30,
             WidthRequest = 180,
             HeightRequest = 60,
             Margin = new Thickness(0, 0, 0, 10)
         };
-        pedidos.Children.Add(button);
 
-        frame.Content = pedidos;
+        // Agregar los elementos al StackLayout
+        stackLayout.Children.Add(image);
+        stackLayout.Children.Add(nombrePlatillo);
+        stackLayout.Children.Add(descripcion);
+        horizontalStackLayout.Children.Add(label3);
+        horizontalStackLayout.Children.Add(precio);
+        stackLayout.Children.Add(horizontalStackLayout);
+        stackLayout.Children.Add(btnAgg);
 
-        Content = frame;
+        // Asignar el StackLayout como contenido del Frame
+        frame.Content = stackLayout;
+
+        return frame;
     }
+
     private void btnSalir_Clicked(object sender, EventArgs e)
     {
         Navigation.PopAsync();
@@ -107,10 +139,13 @@ public partial class Cliente : ContentPage
         DatosPlatillos dato = new DatosPlatillos();
         op.ConsultarEmpresa(Convert.ToString(cbEmpresa.SelectedItem), dato);
         IDNegocio2 = dato.IDNegocio;
+        pedidos.Children.Clear();
+        MostrarPlatillos();
     }
 
     private void ContentPage_Appearing(object sender, EventArgs e)
     {
         llenarComboEmpresa();
     }
+    
 }

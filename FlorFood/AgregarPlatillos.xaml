@@ -5,22 +5,12 @@
              xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              x:Class="FlorFood.AgregarPlatillos"
              IconImageSource="iconoplatillo.png"
-             NavigationPage.HasNavigationBar="False"
-             Appearing="ContentPage_Appearing">
+             NavigationPage.HasNavigationBar="False">
     <ScrollView>
         <StackLayout>
             <Label Text="Platillos" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20" CharacterSpacing="2" Margin="0,10,0,0" TextColor="Black" FontFamily="Titulo"/>
             <Label Text="ID" x:Name="lblID" HorizontalOptions="Center" TextColor="Black"/>
-            <Label Text="Selecciona la empresa" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15" CharacterSpacing="2" Margin="0,10,0,0" TextColor="Black" FontFamily="Titulo"/>
-            <editors:SfComboBox x:Name="cbEmpresa"
-                                WidthRequest="250"
-                                MaxDropDownHeight="250"
-                                TextMemberPath="Name"
-                                DisplayMemberPath="Name"
-                                SelectionChanged="cbEmpresa_SelectionChanged"
-                                Stroke="#e33d8b"
-                                >
-            </editors:SfComboBox>
+            <Label Text="" x:Name="lblNombreEmpresa" HorizontalOptions="Center" TextColor="Black"/>
             <inputLayout:SfTextInputLayout Hint="Name" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" Stroke="#e33d8b" ContainerBackground="White">
                 <Entry x:Name="tbNombre" Completed="tbNombre_Completed"/>
             </inputLayout:SfTextInputLayout>
