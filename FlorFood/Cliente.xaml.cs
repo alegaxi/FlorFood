@@ -2,23 +2,28 @@ namespace FlorFood;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using MySqlConnector;
+using System.Collections.ObjectModel;
 
 public partial class Cliente : ContentPage
 {
+    private List<DatosPlatillos> platillosSeleccionados = new List<DatosPlatillos>();
     public static String userCliente;
     public static String passwordCliente;
+
     int IDNegocio2 = 0;
     public Cliente()
 	{
-		InitializeComponent();
         OpBaseDeDatos op = new OpBaseDeDatos();
-        DatosCliente datos = new DatosCliente();
-        if(op.ConsultarClienteNombre(userCliente, passwordCliente, datos))
+        DatosCliente cliente = new DatosCliente();
+        string cliente2 = "";
+        InitializeComponent();
+        if(op.ConsultarClienteNombre(userCliente, passwordCliente, cliente))
         {
-            NombreCliente.Text = datos.Nombre;
+            cliente2 = cliente.Nombre;
+            NombreCliente.Text = cliente2;
+            Carrito.ClienteNom = cliente2;
         }
     }
-
     private void MostrarPlatillos()
     {
         OpBaseDeDatos op = new OpBaseDeDatos();
@@ -30,6 +35,7 @@ public partial class Cliente : ContentPage
             pedidos.Children.Add(frame);
         }
     }
+
     public Frame CreateCustomFrame(DatosPlatillos platillo)
     {
         Frame frame = new Frame
@@ -44,7 +50,6 @@ public partial class Cliente : ContentPage
             HorizontalOptions = LayoutOptions.Center
         };
 
-        // Crear los elementos visuales utilizando los datos del platillo
         Image image = new Image
         {
             Source = ImageSource.FromStream(() => new MemoryStream(platillo.Imagen)),
@@ -100,8 +105,11 @@ public partial class Cliente : ContentPage
             HeightRequest = 60,
             Margin = new Thickness(0, 0, 0, 10)
         };
+        btnAgg.Clicked += (sender, e) =>
+        {
+            platillosSeleccionados.Add(platillo);
+        };
 
-        // Agregar los elementos al StackLayout
         stackLayout.Children.Add(image);
         stackLayout.Children.Add(nombrePlatillo);
         stackLayout.Children.Add(descripcion);
@@ -110,7 +118,6 @@ public partial class Cliente : ContentPage
         stackLayout.Children.Add(horizontalStackLayout);
         stackLayout.Children.Add(btnAgg);
 
-        // Asignar el StackLayout como contenido del Frame
         frame.Content = stackLayout;
 
         return frame;
@@ -139,6 +146,7 @@ public partial class Cliente : ContentPage
         DatosPlatillos dato = new DatosPlatillos();
         op.ConsultarEmpresa(Convert.ToString(cbEmpresa.SelectedItem), dato);
         IDNegocio2 = dato.IDNegocio;
+        Carrito.EmpresaId = IDNegocio2;
         pedidos.Children.Clear();
         MostrarPlatillos();
     }
@@ -147,5 +155,10 @@ public partial class Cliente : ContentPage
     {
         llenarComboEmpresa();
     }
-    
+
+    private void ImageButton_Clicked(object sender, EventArgs e)
+    {
+        var carrito = new Carrito(platillosSeleccionados);
+        Navigation.PushAsync(carrito);
+    }
 }

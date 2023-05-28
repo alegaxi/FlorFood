@@ -7,6 +7,7 @@ namespace FlorFood;
 
 public partial class AgregarPlatillos : ContentPage
 {
+    public Boolean bExiste = false;
     public static String userEmpresa;
     public static String passEmpresa;
     int IDNegocio2 = 0;
@@ -20,7 +21,11 @@ public partial class AgregarPlatillos : ContentPage
         {
             lblNombreEmpresa.Text = empresa.Nombre;
         }
-	}
+        DatosPlatillos dato = new DatosPlatillos();
+        op.ConsultarEmpresa(lblNombreEmpresa.Text, dato);
+        IDNegocio2 = dato.IDNegocio;
+        VerPedidos.NegocioId = IDNegocio2;
+    }
 
     private void btnSalir_Clicked(object sender, EventArgs e)
     {
@@ -57,10 +62,6 @@ public partial class AgregarPlatillos : ContentPage
             await fs.ReadAsync(arreglo, 0, (int)fs.Length);
         }
 
-        DatosPlatillos dato = new DatosPlatillos();
-        op.ConsultarEmpresa(lblNombreEmpresa.Text, dato);
-        IDNegocio2 = dato.IDNegocio;
-
         DatosPlatillos datos = new DatosPlatillos()
         {
             IDPlatillo = Int32.Parse(lblID.Text),
@@ -70,8 +71,8 @@ public partial class AgregarPlatillos : ContentPage
             Descripcion= tbDescripcion.Text,
             Imagen = arreglo
         };
-
-        if(op.InsertPLatillo(datos))
+        Boolean bAllOUsuario = (!bExiste) ? op.InsertPLatillo(datos) : op.UpdatePlatillo(datos);
+        if (op.bAllOk == true)
         {
             await DisplayAlert("CORRECTO", "Informacion almacenada correctamente", "Aceptar");
         }
@@ -80,14 +81,24 @@ public partial class AgregarPlatillos : ContentPage
             await DisplayAlert("ERROR", op.sLastError, "Aceptar");
         }
     }
+    private void limpiar()
+    {
+        OpBaseDeDatos op = new OpBaseDeDatos();
+        lblID.Text = op.FolioPlatillo().ToString();
+        tbNombre.Text = "";
+        tbPrecio.Text = "";
+        tbDescripcion.Text = "";
+        ImagenGuardada.Source = null;
+        tbImageSource.Text = "";
 
+    }
     private void tbNombre_Completed(object sender, EventArgs e)
     {
         OpBaseDeDatos op = new OpBaseDeDatos();
 
         DatosPlatillos datos = new DatosPlatillos();
 
-        if (op.ReadPlatillo(tbNombre.Text, ref datos))
+        if (op.ReadPlatillo(tbNombre.Text, IDNegocio2, ref datos))
         {
             lblID.Text = datos.IDPlatillo.ToString();
             tbNombre.Text = datos.Nombre;
@@ -104,6 +115,25 @@ public partial class AgregarPlatillos : ContentPage
             }
 
             ImagenGuardada.Source = imageSource;
+        }
+        else
+        {
+            DisplayAlert("ERROR", op.sLastError, "Aceptar");
+        }
+    }
+
+    private void btnLimpiar_Clicked(object sender, EventArgs e)
+    {
+        limpiar();
+    }
+
+    private void btnEliminar_Clicked(object sender, EventArgs e)
+    {
+        OpBaseDeDatos op = new OpBaseDeDatos();
+        if (op.DeletePlatillo(tbNombre.Text, IDNegocio2))
+        {
+            DisplayAlert("CORRECTO", "Informacion eliminada correctamente", "Aceptar");
+            limpiar();
         }
         else
         {

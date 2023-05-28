@@ -2,15 +2,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
              x:Class="FlorFood.Cliente"
              Appearing="ContentPage_Appearing">
 
     <ScrollView Orientation="Vertical">
         <VerticalStackLayout x:Name="ContenidoCliente">
-            <Label Text="Bienvenido/a" HorizontalOptions="Center" TextColor="Black" FontFamily="Titulo" FontSize="15"/>
-            <Label x:Name="NombreCliente" Text=" " TextColor="Black" HorizontalOptions="Center"/>
-            <Label Text="Selecciona la empresa" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15" CharacterSpacing="2" Margin="0,10,0,0" TextColor="Black" FontFamily="Titulo"/>
-
+            <HorizontalStackLayout HorizontalOptions="EndAndExpand">
+                <controls:ImageButton Source="comprar.png" Clicked="ImageButton_Clicked" HeightRequest="40"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="Bienvenido/a " HorizontalOptions="Center" VerticalOptions="Center" TextColor="#e33d8b" FontFamily="Titulo" FontSize="20"/>
+                <Label x:Name="NombreCliente" TextColor="#e33d8b" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="Titulo" FontSize="20"/>
+            </HorizontalStackLayout>
+            <Label Text="Selecciona la empresa" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15" CharacterSpacing="2" Margin="0,20,0,0" TextColor="Black" FontFamily="Titulo"/>
             <editors:SfComboBox x:Name="cbEmpresa"
                                 WidthRequest="250"
                                 MaxDropDownHeight="250"
@@ -29,8 +34,6 @@
 
             <StackLayout x:Name="pedidos" Orientation="Vertical">
             </StackLayout>
-
-
             <Button x:Name="btnSalir" 
                     Text="Salir" 
                     BackgroundColor="#e33d8b"
@@ -41,7 +44,6 @@
                     HeightRequest="60"
                     Margin="0,0,0,10"
                     Clicked="btnSalir_Clicked"/>
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

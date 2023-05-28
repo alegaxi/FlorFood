@@ -6,7 +6,11 @@ public partial class MainPage : ContentPage
 	{
         InitializeComponent();
 	}
-
+    private void LimpiarCampos()
+    {
+        tbPassword.Text = "";
+        tbUser.Text = "";
+    }
     private void btnAcept_Clicked(object sender, EventArgs e)
     {
         if(tbUser.Text != null && tbPassword != null)
@@ -24,10 +28,11 @@ public partial class MainPage : ContentPage
             };
             if(op.ValInicioSesionCliente(datoscliente))
             {
-                var cliente = new Cliente();
                 Cliente.userCliente = tbUser.Text;
                 Cliente.passwordCliente = tbPassword.Text;
+                var cliente = new Cliente();
                 Navigation.PushAsync(cliente);
+                LimpiarCampos();
             }
             else
             {
@@ -37,6 +42,7 @@ public partial class MainPage : ContentPage
                     AgregarPlatillos.passEmpresa = tbPassword.Text;
                     var negocio = new Negocio();
                     Navigation.PushAsync(negocio);
+                    LimpiarCampos();
                 }
                 else
                 {

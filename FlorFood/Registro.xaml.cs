@@ -45,6 +45,7 @@ public partial class Registro : ContentPage
     private void map_MapClicked(object sender, MapClickedEventArgs e)
     {
         System.Diagnostics.Debug.WriteLine($"MapClick: {e.Location.Latitude}, {e.Location.Longitude}");
+        map.Pins.Clear();
         Pin pin = new Pin
         {
             Label = "Tienda",
@@ -127,11 +128,10 @@ public partial class Registro : ContentPage
                                                     Contrasena = tbPassword.Text
                                                 };
                                                 Boolean bAllOUsuario = (!bExiste) ? opCliente.InsertCliente(datos) : opCliente.UpdateCliente(datos);
-                                                //opCliente.InsertCliente(datos);
                                                 if (opCliente.bAllOk == true)
                                                 {
                                                     DisplayAlert("CORRECTO", "Informacion almacenada correctamente", "Aceptar");
-                                                    //LimpiarCampos();
+                                                    LimpiarCampos();
                                                 }
                                                 else
                                                 {
@@ -155,11 +155,10 @@ public partial class Registro : ContentPage
                                                         Longitud = Convert.ToDouble(lblLongitud.Text),
                                                     };
                                                     Boolean bAllOUsuario = (!bExiste) ? opEmpresa.InsertEmpresa(datos) : opEmpresa.UpdateEmpresa(datos);
-                                                    //opEmpresa.InsertEmpresa(datos);
                                                     if (opEmpresa.bAllOk == true)
                                                     {
                                                         DisplayAlert("CORRECTO", "Informacion almacenada correctamente", "Aceptar");
-                                                        //LimpiarCampos();
+                                                        LimpiarCampos();
                                                     }
                                                     else
                                                     {
@@ -177,7 +176,17 @@ public partial class Registro : ContentPage
             }
         }
     }
-
+    private void LimpiarCampos()
+    {
+        tbNombre.Text = "";
+        tbApellido.Text = "";
+        tbTelefono.Text = "";
+        tbUser.Text = "";
+        tbPassword.Text = "";
+        tbConfirmPassword.Text = "";
+        lblLatitud.Text = "";
+        lblLongitud.Text = "";
+    }
     private void btnEliminar_Clicked(object sender, EventArgs e)
     {
         OpBaseDeDatos opCliente = new OpBaseDeDatos();
@@ -186,6 +195,7 @@ public partial class Registro : ContentPage
             if(opCliente.DeleteCliente(tbNombre.Text))
             {
                 DisplayAlert("CORRECTO", "Informacion eliminada correctamente", "Aceptar");
+                LimpiarCampos();
             }
             else
             {
@@ -199,6 +209,7 @@ public partial class Registro : ContentPage
                 if (opCliente.DeleteEmpresa(tbNombre.Text))
                 {
                     DisplayAlert("CORRECTO", "Informacion eliminada correctamente", "Aceptar");
+                    LimpiarCampos();
                 }
                 else
                 {
@@ -256,5 +267,10 @@ public partial class Registro : ContentPage
                 DisplayAlert("ERROR", "Seleccione un tipo de usuario", "Aceptar");
             }
         }
+    }
+
+    private void btnLimpiar_Clicked(object sender, EventArgs e)
+    {
+        LimpiarCampos();
     }
 }

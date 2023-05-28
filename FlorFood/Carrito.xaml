@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             x:Class="FlorFood.Carrito">
+    <ScrollView Orientation="Vertical">
+        <VerticalStackLayout x:Name="ContenidoPlatillos">
+            <Label Text="CARRITO DE COMPRA" FontFamily="Titulo" FontSize="16" HorizontalOptions="Center"/>
+            <Label x:Name="NombreCliente" TextColor="Black" HorizontalOptions="Center"/>
+            <StackLayout x:Name="pedidos2" Orientation="Vertical">
+            </StackLayout>
+            <inputLayout:SfTextInputLayout x:Name="Total" Hint="Total" ContainerType="Outlined" OutlineCornerRadius="8" HeightRequest="80" WidthRequest="250" Stroke="#e33d8b" ContainerBackground="White">
+                <Entry x:Name="tbTotal"/>
+            </inputLayout:SfTextInputLayout>
+            <maps:Map x:Name="map" IsShowingUser="True" MapType="Street" HeightRequest="500" Margin="0,0,0,10" MapClicked="map_MapClicked" IsZoomEnabled="true">
+                <x:Arguments>
+                    <MapSpan>
+                        <x:Arguments>
+                            <sensors:Location>
+                                <x:Arguments>
+                                    <x:Double>25.5730820</x:Double>
+                                    <x:Double>-108.4712446</x:Double>
+                                </x:Arguments>
+                            </sensors:Location>
+                            <x:Double>0.01</x:Double>
+                            <x:Double>0.01</x:Double>
+                        </x:Arguments>
+                    </MapSpan>
+                </x:Arguments>
+            </maps:Map>
+            <Button x:Name="btnPedir" 
+                    Text="Pedir" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="30"
+                    WidthRequest="180"
+                    HeightRequest="60"
+                    Margin="0,0,0,10"
+                    Clicked="btnPedir_Clicked"/>
+            <Button x:Name="btnRegresar" 
+                    Text="Regresar" 
+                    BackgroundColor="#e33d8b"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="White"
+                    CornerRadius="30"
+                    WidthRequest="180"
+                    HeightRequest="60"
+                    Margin="0,0,0,10"
+                    Clicked="btnRegresar_Clicked"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

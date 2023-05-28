@@ -49,6 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\comprar.png" />
 	  <None Remove="Resources\Images\delivery.png" />
 	  <None Remove="Resources\Images\hamburguesa.jpg" />
 	  <None Remove="Resources\Images\iconoplatillo.png" />
@@ -58,6 +59,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.81" />
 		<PackageReference Include="MySqlConnector" Version="2.2.6" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Syncfusion.Licensing" Version="21.2.3" />
 		<PackageReference Include="Syncfusion.Maui.Core" Version="21.2.3" />
 		<PackageReference Include="Syncfusion.Maui.Inputs" Version="21.2.3" />
@@ -65,6 +67,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="AgregarPlatillos.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Carrito.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Cliente.xaml">
